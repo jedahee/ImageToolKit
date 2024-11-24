@@ -84,3 +84,26 @@ imagetools/
 
 
 '''
+
+
+# Imports
+from PIL import Image
+
+def run_interactive_app():
+  pass
+
+def main():
+    # ! PROXIMO CLI
+    '''
+    # Verificar si se pasaron argumentos al ejecutar el script
+    if len(sys.argv) > 1:
+        # Si se pasaron argumentos, ejecutar la CLI
+        cli()  # Llamamos a la función cli() definida en src/cli.py
+    else:
+        # Si no se pasaron argumentos, ejecutar la app interactiva
+        run_interactive_app()
+    '''
+    run_interactive_app()
+
+if __name__ == "__main__":
+    main()
