@@ -24,8 +24,7 @@ Flujo de Image Tools:
 
 -> Entrada al script
   -> Mensaje de bienvenida
-  -> Ofrecer catálogo de opciones
-  -> (Usuario elige opción correcta del catálogo)
+  -> (Usuario elige opción correcta del catálogo) - (Muestra listado)
   -> (Usuario especifica la ruta que contiene sus imágenes)
   -> (Usuario selecciona que imágenes quiere editar)
 
@@ -85,12 +84,25 @@ imagetools/
 
 '''
 
-
-# Imports
-from PIL import Image
+# Internal import
+from src.utils import welcome, select_option, ask_for_path, ask_for_images
 
 def run_interactive_app():
-  pass
+  option_menu = ""
+  images_selected = []
+  selected_path=" "
+
+  while option_menu.lower() != "exit":
+    welcome()
+    option_menu = select_option()
+
+    if option_menu.lower() != "exit":
+      selected_path = ask_for_path()
+
+      if (selected_path != ".." and selected_path != ""):
+        images_selected = ask_for_images(selected_path)
+    else:
+      print("Bye! :)")
 
 def main():
     # ! PROXIMO CLI
