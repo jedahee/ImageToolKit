@@ -15,3 +15,13 @@ style = Style([
   ('text', ''),                       # plain text
   ('disabled', 'fg:#858585 italic')   # disabled choices for select and checkbox prompts
 ])
+
+options_main_menu = {
+  'REDUCE': 'Reduce the file size of the image(s)',
+  'RESIZE': 'Resize and scale the image(s)',
+  'FORMATS': 'Convert image formats (PNG, JPG, JPEG, etc.)',
+  'GRAYSCALE': 'Convert to grayscale',
+  'FILTERS': 'Apply image filters',
+  'TEXT': 'Add text to the image(s)',
+  'THUMBNAILS': 'Create image thumbnails',
+}

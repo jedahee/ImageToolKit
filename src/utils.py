@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 from sys import exit
 
-from src.variables import valid_extensions, style
+from src.variables import valid_extensions, style, options_main_menu
 
 def welcome():
   print("""
@@ -29,19 +29,9 @@ def welcome():
 """)
 
 def select_option():
-
   option = questionary.select(
     "What do you want ImageTools to do for you?",
-    choices=[
-      'Reduce the file size of the image(s)',
-      'Resize and scale the image(s)',
-      'Convert image formats (PNG, JPG, JPEG, etc.)',
-      'Convert to grayscale',
-      'Apply image filters',
-      'Add text to the image(s)',
-      'Create image thumbnails',
-      'Exit'
-    ],
+    choices=list(options_main_menu.values()),
     style=style
   ).ask()
 
