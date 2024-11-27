@@ -86,6 +86,7 @@ imagetools/
 
 # Internal import
 from src.utils import welcome, select_option, ask_for_path, ask_for_images
+from src.variables import options_main_menu
 
 def run_interactive_app():
   option_menu = ""
@@ -101,8 +102,25 @@ def run_interactive_app():
 
       if (selected_path != ".." and selected_path != ""):
         images_selected = ask_for_images(selected_path)
+
+        if option_menu == options_main_menu["REDUCE"]:
+          pass
+        elif option_menu == options_main_menu["RESIZE"]:
+          pass
+        elif option_menu == options_main_menu["FORMATS"]:
+          pass
+        elif option_menu == options_main_menu["GRAYSCALE"]:
+          pass
+        elif option_menu == options_main_menu["FILTERS"]:
+          pass
+        elif option_menu == options_main_menu["TEXT"]:
+          pass
+        elif option_menu == options_main_menu["THUMBNAILS"]:
+          pass
+
     else:
       print("Bye! :)")
+
 
 def main():
     # ! PROXIMO CLI
