@@ -83,3 +83,11 @@ def ask_for_images(path):
   ).ask()
 
   return ask_for_images(path) if selected_images_dir == None else selected_images_dir
+
+
+def qselect(message, options):
+  return questionary.select(
+    message,
+    choices=options,
+    style=style
+  ).ask()
