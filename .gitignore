@@ -1,6 +1,6 @@
 # Custom
 test_images/
-
+new_images/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
