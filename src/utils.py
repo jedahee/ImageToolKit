@@ -94,13 +94,14 @@ def qselect(message, options):
 
 def display_msg(msg, type_msg):
   color = ""
-  if (type_msg == errors_allowed['ERROR']):
-    color = "41"
-  elif (type_msg == errors_allowed['WARNING']):
-    color = "43"
-  elif (type_msg == errors_allowed['INFO']):
-    color = "44"
-  elif (type_msg == errors_allowed['SUCCESS']):
-    color = "32"
+  if type_msg == 'error':
+      color = "\033[37m\033[41m"  # Texto blanco (37m), fondo rojo (41m)
+  elif type_msg == 'warning':
+      color = "\033[37m\033[43m"  # Texto blanco (37m), fondo amarillo (43m)
+  elif type_msg == 'info':
+      color = "\033[37m\033[44m"  # Texto blanco (37m), fondo azul (44m)
+  elif type_msg == 'success':
+      color = "\033[37m\033[42m"  # Texto blanco (37m), fondo verde (42m)
 
-  print("\033["+str(color)+"m"+str(msg)+"\033[0m")
+  # Imprimir el mensaje con los colores de texto y fondo
+  print(f"{color}{msg}\033[0m")  # \033[0m es para resetear los estilos
