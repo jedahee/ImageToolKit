@@ -1,5 +1,6 @@
-from src.variables import output_path
+from src.variables import output_path, msg_allowed
 from src.rescale import rescale_percent
+from src.utils import display_msg
 from PIL import Image
 import os
 import warnings
@@ -40,7 +41,7 @@ def compress(input_path, images, can_resize, want_force, max_size):
     image_size = os.path.getsize(input_path+image) / 1024  # Tamaño en KB
 
     if image_size < max_size:
-      print("Image "+str(image)+" already had a size below the specified KB limit. (Actual size:",round(image_size, 2),"KB)")
+      display_msg("Image "+str(image)+" already had a size below the specified KB limit. (Actual size: " + str(round(image_size, 2)) + " KB)", msg_allowed["INFO"], False)
       user_is_info = True
 
     # Si el tamaño es mayor que el máximo permitido, ajustamos la calidad
@@ -66,7 +67,7 @@ def compress(input_path, images, can_resize, want_force, max_size):
         image_size = os.path.getsize(output_path_copy) / (1024)  # Tamaño en KB
 
     if not user_is_info:
-      print("Image "+ str(image) +" now has a file size of", int(image_size),"KB.")
+      display_msg("Image "+ str(image) +" now has a file size of "+ str(round(image_size, 2))+" KB.", msg_allowed["SUCCESS"], False)
     else:
       if image_size > max_size:
-        print("Image "+str(image)+" could not reach the specified maximum size, it has been reduced to a weight of", int(image_size),"KB.")
+        display_msg("Image "+str(image)+" could not reach the specified maximum size, it has been reduced to a weight of "+ str(round(image_size, 2))+" KB.", msg_allowed["WARNING"], False)

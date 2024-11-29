@@ -27,7 +27,7 @@ options_main_menu = {
   'EXIT': 'Exit',
 }
 
-errors_allowed = {
+msg_allowed = {
   'ERROR': 'error',
   'WARNING': 'warning',
   'INFO': 'info',

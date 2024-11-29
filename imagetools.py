@@ -88,7 +88,7 @@ imagetools/
 # Internal import
 from src.utils import welcome, select_option, ask_for_path, ask_for_images, qselect, display_msg
 from src.compress import compress
-from src.variables import options_main_menu, allowed_limits_kb, errors_allowed
+from src.variables import options_main_menu, allowed_limits_kb, msg_allowed
 
 def run_interactive_app():
   option_menu = ""
@@ -113,6 +113,8 @@ def run_interactive_app():
           can_resize = True if can_resize.lower() == "yes" else False
           want_force = True if want_force.lower() == "yes" else False
 
+          print()
+
           compress(selected_path, images_selected, can_resize, want_force, max_size)
 
         elif option_menu == options_main_menu["RESIZE"]:
@@ -129,7 +131,7 @@ def run_interactive_app():
           pass
 
     else:
-      print("Bye! :)")
+      display_msg("Bye! :)", msg_allowed["INFO"])
 
 
 def main():
