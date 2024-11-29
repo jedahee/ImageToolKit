@@ -30,8 +30,8 @@ options_main_menu = {
 errors_allowed = [
   'ERROR': 'error',
   'WARNING': 'warning',
-  'INFO'; 'info',
-  'SUCCESS', 'success'
+  'INFO': 'info',
+  'SUCCESS': 'success'
 ]
 
 output_path = "new_images"
