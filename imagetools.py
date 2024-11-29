@@ -32,6 +32,7 @@ Flujo de Image Tools:
   -> Reducir el peso de la(s) imagen(es)
     -> ¿Por debajo de que tamaño quieres que Image Tools lo reduzca? (ej.: 512KB | siempre en KB)
     -> ¿Si hay imágenes con demasiado tamaño, puede Image Tools reescarla y hacerla más pequeña?
+    -> ¿Si la imagen es demasiado pesada, quieres forzar la reducción de tamaño al límite especificado en KB sacrificando algo de calidad?
   -> Redimensionar (valor fijo) o reescalar (valor proporcional)
     -> Redimensionar
       -> Mostrar aviso de que si se redimensiona a una escala mayor a la de la imagen original puede perder calidad
@@ -85,26 +86,35 @@ imagetools/
 '''
 
 # Internal import
-from src.utils import welcome, select_option, ask_for_path, ask_for_images
-from src.variables import options_main_menu
+from src.utils import welcome, select_option, ask_for_path, ask_for_images, qselect
+from src.compress import compress
+from src.variables import options_main_menu, allowed_limits_kb
 
 def run_interactive_app():
   option_menu = ""
   images_selected = []
   selected_path=" "
 
-  while option_menu.lower() != "exit":
+  while option_menu != options_main_menu["EXIT"]:
     welcome()
     option_menu = select_option()
 
-    if option_menu.lower() != "exit":
+    if option_menu != options_main_menu["EXIT"]:
       selected_path = ask_for_path()
 
       if (selected_path != ".." and selected_path != ""):
         images_selected = ask_for_images(selected_path)
 
         if option_menu == options_main_menu["REDUCE"]:
-          pass
+          max_size = qselect("Choose the maximum image size:", allowed_limits_kb)
+          can_resize = qselect("If the image exceeds an appropriate size, do you authorize Image Tools to resize it to a smaller dimension?", ["Yes", "No"])
+          want_force = qselect("If the image is too large, would you like to force the size reduction to the specified KB limit, sacrificing some quality?", ["Yes", "No"])
+
+          can_resize = True if can_resize.lower() == "yes" else False
+          want_force = True if want_force.lower() == "yes" else False
+
+          compress(selected_path, images_selected, can_resize, want_force, max_size)
+
         elif option_menu == options_main_menu["RESIZE"]:
           pass
         elif option_menu == options_main_menu["FORMATS"]:
