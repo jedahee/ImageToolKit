@@ -27,6 +27,13 @@ options_main_menu = {
   'EXIT': 'Exit',
 }
 
+errors_allowed = [
+  'ERROR': 'error',
+  'WARNING': 'warning',
+  'INFO'; 'info',
+  'SUCCESS', 'success'
+]
+
 output_path = "new_images"
 
 allowed_limits_kb = ["1500 KB", "1024 KB", "512 KB"]
