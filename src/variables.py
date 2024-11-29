@@ -27,12 +27,12 @@ options_main_menu = {
   'EXIT': 'Exit',
 }
 
-errors_allowed = [
+errors_allowed = {
   'ERROR': 'error',
   'WARNING': 'warning',
   'INFO': 'info',
   'SUCCESS': 'success'
-]
+}
 
 output_path = "new_images"
 
