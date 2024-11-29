@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 from sys import exit
 
-from src.variables import valid_extensions, style, options_main_menu
+from src.variables import valid_extensions, style, options_main_menu, errors_allowed
 
 def welcome():
   print("""
@@ -91,3 +91,16 @@ def qselect(message, options):
     choices=options,
     style=style
   ).ask()
+
+def display_msg(msg, type_msg):
+  color = ""
+  if (type_msg == errors_allowed['ERROR']):
+    color = "41"
+  elif (type_msg == errors_allowed['WARNING']):
+    color = "43"
+  elif (type_msg == errors_allowed['INFO']):
+    color = "44"
+  elif (type_msg == errors_allowed['SUCCESS']):
+    color = "32"
+
+  print("\033["+str(color)+"m"+str(msg)+"\033[0m")
