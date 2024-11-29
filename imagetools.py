@@ -86,9 +86,9 @@ imagetools/
 '''
 
 # Internal import
-from src.utils import welcome, select_option, ask_for_path, ask_for_images, qselect
+from src.utils import welcome, select_option, ask_for_path, ask_for_images, qselect, display_msg
 from src.compress import compress
-from src.variables import options_main_menu, allowed_limits_kb
+from src.variables import options_main_menu, allowed_limits_kb, errors_allowed
 
 def run_interactive_app():
   option_menu = ""
