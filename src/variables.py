@@ -24,4 +24,9 @@ options_main_menu = {
   'FILTERS': 'Apply image filters',
   'TEXT': 'Add text to the image(s)',
   'THUMBNAILS': 'Create image thumbnails',
+  'EXIT': 'Exit',
 }
+
+output_path = "new_images"
+
+allowed_limits_kb = ["1500 KB", "1024 KB", "512 KB"]
