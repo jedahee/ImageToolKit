@@ -1,0 +1,117 @@
+from PIL import Image, ImageEnhance, ImageOps, ImageFilter
+import os
+from src.utils import display_msg
+from src.variables import msg_allowed, output_path
+
+# Función para aplicar un filtro a una imagen
+def apply_filter_to_images(input_path, images, filter_choice):
+    filters = {
+        "SEPIA": apply_sepia,
+        "INVERT": invert_colors,
+        "GRAYSCALE": grayscale_filter,
+        "BLUR": blur_filter,
+        "CONTOUR": contour_filter,
+        "DETAIL": detail_filter,
+        "SHARPEN": sharpen_filter,
+        "EMBOSS": emboss_filter,
+        "EDGE_ENHANCE": edge_enhance_filter,
+        "SMOOTH": smooth_filter,
+        "POSTERIZE": posterize_filter,
+        "SOLARIZE": solarize_filter,
+        "EQUALIZE": equalize_filter,
+        "BRIGHTNESS_INC": lambda img: adjust_brightness(img, 1.5),
+        "BRIGHTNESS_DEC": lambda img: adjust_brightness(img, 0.7),
+        "CONTRAST_INC": lambda img: adjust_contrast(img, 1.5),
+        "CONTRAST_DEC": lambda img: adjust_contrast(img, 0.7),
+        "SATURATION_INC": lambda img: adjust_saturation(img, 1.5),
+        "SATURATION_DEC": lambda img: adjust_saturation(img, 0.7),
+        "ROTATE_90": lambda img: img.rotate(90, expand=True),
+        "ROTATE_180": lambda img: img.rotate(180, expand=True),
+        "FLIP_HORIZONTAL": ImageOps.mirror,
+        "FLIP_VERTICAL": ImageOps.flip,
+        "CROP_CENTER": crop_center
+    }
+
+    input_path = str(input_path)
+    input_path += '/' if input_path[-1] != '/' else ''
+
+
+    for image in images:
+        try:
+            with Image.open(input_path + image) as img:
+                # Aplicar filtro
+                filtered_img = filters[filter_choice](img)
+
+                # Guardar la imagen procesada
+                output_image_path = os.path.join(output_path, image)
+                filtered_img.save(output_image_path)
+
+                display_msg(f"Filter {filter_choice} applied to {image} and saved to {output_path}", msg_allowed["SUCCESS"], False)
+        except Exception as e:
+            display_msg(f"Error processing image {image}: {e}", msg_allowed["ERROR"], False)
+
+
+# Funciones específicas para cada filtro
+def apply_sepia(image):
+    sepia_filter = ImageOps.colorize(
+        image.convert("L"), black="#704214", white="#C0A080"
+    )
+    return sepia_filter
+
+def invert_colors(image):
+    return ImageOps.invert(image.convert("RGB"))
+
+def grayscale_filter(image):
+    return image.convert("L")
+
+def blur_filter(image):
+    return image.filter(ImageFilter.BLUR)
+
+def contour_filter(image):
+    return image.filter(ImageFilter.CONTOUR)
+
+def detail_filter(image):
+    return image.filter(ImageFilter.DETAIL)
+
+def sharpen_filter(image):
+    return image.filter(ImageFilter.SHARPEN)
+
+def emboss_filter(image):
+    return image.filter(ImageFilter.EMBOSS)
+
+def edge_enhance_filter(image):
+    return image.filter(ImageFilter.EDGE_ENHANCE)
+
+def smooth_filter(image):
+    return image.filter(ImageFilter.SMOOTH)
+
+def posterize_filter(image):
+    return ImageOps.posterize(image, 4)
+
+def solarize_filter(image):
+    return ImageOps.solarize(image, threshold=128)
+
+def equalize_filter(image):
+    return ImageOps.equalize(image)
+
+def adjust_brightness(image, factor):
+    enhancer = ImageEnhance.Brightness(image)
+    return enhancer.enhance(factor)
+
+def adjust_contrast(image, factor):
+    enhancer = ImageEnhance.Contrast(image)
+    return enhancer.enhance(factor)
+
+def adjust_saturation(image, factor):
+    enhancer = ImageEnhance.Color(image)
+    return enhancer.enhance(factor)
+
+def crop_center(image):
+    width, height = image.size
+    new_width = int(width * 0.8)
+    new_height = int(height * 0.8)
+    left = (width - new_width) // 2
+    top = (height - new_height) // 2
+    right = (width + new_width) // 2
+    bottom = (height + new_height) // 2
+    return image.crop((left, top, right, bottom))
