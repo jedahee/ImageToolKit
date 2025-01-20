@@ -3,14 +3,12 @@ from src.rescale import rescale_percent
 from src.utils import display_msg
 from PIL import Image
 import os
-import warnings
 from pathlib import Path
 
 def compress(input_path, images, can_resize, want_force, max_size):
   input_path = str(input_path)
   input_path += '/' if input_path[-1] != '/' else '';
   max_size = int(max_size[:-2])
-  warnings.simplefilter('ignore', Image.DecompressionBombWarning)
 
   base_dir = Path(__file__).resolve().parent.parent  # Subir dos directorios
 
@@ -32,7 +30,8 @@ def compress(input_path, images, can_resize, want_force, max_size):
 
     quality = 100
     min_quality_resize = 40
-    min_quality = min_quality_resize if not want_force else 5
+    min_quality_no_resize = 20 if not can_resize else 5
+    min_quality = (min_quality_resize-15) if not want_force else min_quality_no_resize
 
     if (width >= Image.MAX_IMAGE_PIXELS or height >= Image.MAX_IMAGE_PIXELS) and can_resize:
       image_open = rescale_percent(image_open, 90)
@@ -53,8 +52,8 @@ def compress(input_path, images, can_resize, want_force, max_size):
             resize_size_percent = 50
           elif (resize_size_percent == 50):
             image_open = rescale_percent(image_open, resize_size_percent)
-            resize_size_percent = 25
-          elif (resize_size_percent == 25):
+            resize_size_percent = 35
+          elif (resize_size_percent == 35):
             resize_size_percent = 10
             image_open = rescale_percent(image_open, resize_size_percent)
 
@@ -67,7 +66,8 @@ def compress(input_path, images, can_resize, want_force, max_size):
         image_size = os.path.getsize(output_path_copy) / (1024)  # Tamaño en KB
 
     if not user_is_info:
-      display_msg("Image "+ str(image) +" now has a file size of "+ str(round(image_size, 2))+" KB.", msg_allowed["SUCCESS"], False)
-    else:
       if image_size > max_size:
         display_msg("Image "+str(image)+" could not reach the specified maximum size, it has been reduced to a weight of "+ str(round(image_size, 2))+" KB.", msg_allowed["WARNING"], False)
+      else:
+        display_msg("Image "+ str(image) +" now has a file size of "+ str(round(image_size, 2))+" KB.", msg_allowed["SUCCESS"], False)
+
