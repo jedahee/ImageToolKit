@@ -26,6 +26,15 @@ options_main_menu = {
   'EXIT': 'Exit',
 }
 
+available_filters = [
+  "SEPIA", "INVERT", "GRAYSCALE", "BLUR", "CONTOUR", "DETAIL",
+  "SHARPEN", "EMBOSS", "EDGE_ENHANCE", "SMOOTH", "POSTERIZE",
+  "SOLARIZE", "EQUALIZE", "BRIGHTNESS_INC", "BRIGHTNESS_DEC",
+  "CONTRAST_INC", "CONTRAST_DEC", "SATURATION_INC", "SATURATION_DEC",
+  "ROTATE_90", "ROTATE_180", "FLIP_HORIZONTAL", "FLIP_VERTICAL",
+  "CROP_CENTER"
+]
+
 msg_allowed = {
   'ERROR': 'error',
   'WARNING': 'warning',
