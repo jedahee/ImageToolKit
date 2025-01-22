@@ -19,8 +19,7 @@ style = Style([
 options_main_menu = {
   'REDUCE': 'Reduce the file size of the image(s)',
   'RESIZE': 'Resize and scale the image(s)',
-  'FORMATS': 'Convert image formats (PNG, JPG, JPEG, etc.)',
-  'GRAYSCALE': 'Convert to grayscale',
+  'FORMATS': 'Convert image formats (PNG, JPG, JPEG, etc.) or rename the file',
   'FILTERS': 'Apply image filters',
   'TEXT': 'Add text to the image(s)',
   'THUMBNAILS': 'Create image thumbnails',
@@ -35,5 +34,5 @@ msg_allowed = {
 }
 
 output_path = "new_images"
-
+fonts_dir = 'fonts/'
 allowed_limits_kb = ["1500 KB", "1024 KB", "512 KB"]
