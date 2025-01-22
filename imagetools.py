@@ -44,7 +44,6 @@ Flujo de Image Tools:
     -> Mostrar comodines disponibles para los nombres (por ej.: index con -INDEX, -INEX_START para indicar el inicio del contenio del index)
     -> Pedir nuevo (o nuevos) nombres
     -> Pedir nueva extensión
-  -> Convertir a blanco y negro
   -> Aplicar filtros
     -> Mostrar catálogo de filtros
     -> Pedir filtro
@@ -53,8 +52,9 @@ Flujo de Image Tools:
     -> Pedir fuente (mostrar catálogo)
     -> Pedir color (mostrar catálogo)
     -> Pedir posición del texto en la imagen
-  -> Crear miniaturas
+  -> Crear miniaturas (favicon)
     -> Mostrar catálogo de tamaños de miniaturas (ej.: 16px, 32px, 48px, 64px)
+    -> Preguntar si quieres tranformar los archivos a .ICO
     -> Pedir tamaño de la miniatura
 
  -> Muestra información del estado de la opción ejecutada
@@ -84,16 +84,30 @@ imagetools/
 
 
 '''
+import questionary
+import warnings
+from PIL import Image
+from time import sleep
+import os, sys
 
 # Internal import
 from src.utils import welcome, select_option, ask_for_path, ask_for_images, qselect, display_msg
 from src.compress import compress
-from src.variables import options_main_menu, allowed_limits_kb, msg_allowed
+from src.extension import new_format
+from src.variables import style, options_main_menu, allowed_limits_kb, msg_allowed, available_filters
+from src.color import apply_filter_to_images
+from src.rescale import thumbnails, process_images_resize
+from src.addtext import get_available_fonts, add_text_to_image
+from src.cli import cli
 
 def run_interactive_app():
-  option_menu = ""
   images_selected = []
-  selected_path=" "
+  option_menu = ""
+  format_selected = ""
+  selected_path= ""
+  base_name = ""
+
+  warnings.simplefilter('ignore', Image.DecompressionBombWarning)
 
   while option_menu != options_main_menu["EXIT"]:
     welcome()
@@ -118,25 +132,151 @@ def run_interactive_app():
           compress(selected_path, images_selected, can_resize, want_force, max_size)
 
         elif option_menu == options_main_menu["RESIZE"]:
-          pass
+          resize_mode = qselect(
+            "Choose resize mode:",
+            ["Fixed size", "Proportional scale"]
+          ).lower()
+
+          if resize_mode == "fixed size":
+            display_msg(
+                "Note: Resizing to larger dimensions may result in quality loss",
+                msg_allowed["INFO"], False
+            )
+
+            try:
+              new_width = int(questionary.text("Enter the new width (px):").ask())
+              new_height = int(questionary.text("Enter the new height (px):").ask())
+
+              quality_type = qselect(
+                "Choose image quality (faster processing or better quality):",
+                ["Normal (fast)", "High (slower processing)"]
+              ).lower()
+
+              quality_mapping = {
+                  "normal (fast)": Image.Resampling.BICUBIC,
+                  "high (slower processing)": Image.Resampling.LANCZOS,
+              }
+
+              quality = quality_mapping[quality_type]
+
+              process_images_resize(
+                  selected_path, images_selected, "fixed",
+                  (new_width, new_height), quality
+              )
+            except Exception as e:
+              print()
+              display_msg(f"Invalid input! Please enter a valid numeric value for the width and height", msg_allowed["ERROR"], False)
+              print()
+
+          elif resize_mode == "proportional scale":
+            try:
+              scale_percent = int(
+                  questionary.text(
+                      "Enter the scaling percentage (e.g., 50, 75, 150):"
+                  ).ask()
+              )
+
+              process_images_resize(
+                selected_path, images_selected, "percent",
+                scale_percent, None
+              )
+            except Exception as e:
+              print()
+              display_msg(f"Invalid input! Please enter a valid numeric value for the width and height", msg_allowed["ERROR"], False)
+              print()
+
         elif option_menu == options_main_menu["FORMATS"]:
-          pass
-        elif option_menu == options_main_menu["GRAYSCALE"]:
-          pass
+          format_selected = qselect("Select the format to convert to:", ["JPEG", "PNG", "BMP"])
+          change_name = qselect("Do you want to rename the files?", ["Yes", "No"])
+          change_name = True if change_name.lower() == "yes" else False
+
+          if change_name:
+            print("\nYou can use the following placeholders:")
+            print(" --INDEX: Adds an index to the end of the new file name, starting from 1. (default)")
+            print(" --START <number>: Adds an index to the end of the new file name, starting from the specified <number>.")
+
+            while base_name == "":
+              base_name = questionary.text("Enter the new base name for your files:", style=style).ask()
+
+          new_format(selected_path, images_selected, format_selected, change_name, base_name)
+          base_name = ""
         elif option_menu == options_main_menu["FILTERS"]:
-          pass
+
+          # Pedir al usuario que seleccione un filtro
+          filter_choice = qselect(
+            "Choose a filter to apply:",
+            available_filters
+          )
+
+          # Aplicar el filtro a las imágenes seleccionadas
+          apply_filter_to_images(selected_path, images_selected, filter_choice)
         elif option_menu == options_main_menu["TEXT"]:
-          pass
+          # Solicitar al usuario el texto a añadir
+          text_to_add = questionary.text("Enter the text to add to the image:").ask()
+
+          # Listar fuentes disponibles en la carpeta "fonts"
+          available_fonts = get_available_fonts()
+
+          if not available_fonts:
+            display_msg("No fonts found in the fonts directory!", msg_allowed["ERROR"], False)
+            font_choice = "Anton.ttf"
+          else:
+            # Pedir al usuario seleccionar una fuente
+            font_choice = qselect("Choose the font for the text:", available_fonts)
+
+          try:
+            # Pedir el tamaño de la fuente
+            font_size_ratio = float(questionary.text(
+              "Enter the font size ratio (e.g., 5%, 15%, 30% of image width):"
+            ).ask())
+          except Exception as e:
+            font_size_ratio = 25
+            display_msg(f"Invalid input! Please enter a valid numeric value for the width and height", msg_allowed["ERROR"], False)
+
+          # Pedir el color del texto
+          color_choice = qselect(
+            "Choose the color of the text:",
+            ["black", "white", "red", "blue", "green"]
+          )
+
+          # Definir las posiciones posibles
+          position_choices = {
+            "Top Left": "Top Left",
+            "Top Right": "Top Right",
+            "Center": "Center",
+            "Bottom Left": "Bottom Left",
+            "Bottom Right": "Bottom Right"
+          }
+
+          # Preguntar por la posición del texto
+          position_choice = qselect(
+            "Choose the position of the text:",
+            list(position_choices.keys())
+          )
+
+          # Obtener las coordenadas de la posición elegida
+          position = position_choices[position_choice]
+
+          add_text_to_image(selected_path, images_selected, text_to_add, position, font_choice, font_size_ratio, color_choice)
+
         elif option_menu == options_main_menu["THUMBNAILS"]:
-          pass
+          thumbnail_size = qselect("Choose the desired size for your favicon or thumbnail:", ["16px", "24px", "32px", "48px", "64px", "92px", "128px"])
+          want_favicon = qselect(
+            "Would you like to convert the images to .ico format for use as favicons?",
+            ["Yes", "No"]
+          ).lower()
+          thumbnails(selected_path, images_selected, want_favicon, int(thumbnail_size[:-2]))
+
+        sleep(1.5)
 
     else:
-      display_msg("Bye! :)", msg_allowed["INFO"])
+      display_msg("All new images are saved in ./new_images", msg_allowed["INFO"])
+      display_msg("Bye! :)", msg_allowed["INFO"], False)
 
 
 def main():
     # ! PROXIMO CLI
-    '''
+
     # Verificar si se pasaron argumentos al ejecutar el script
     if len(sys.argv) > 1:
         # Si se pasaron argumentos, ejecutar la CLI
@@ -144,8 +284,8 @@ def main():
     else:
         # Si no se pasaron argumentos, ejecutar la app interactiva
         run_interactive_app()
-    '''
-    run_interactive_app()
+
+    # run_interactive_app()
 
 if __name__ == "__main__":
     main()
