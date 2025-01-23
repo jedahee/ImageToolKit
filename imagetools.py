@@ -68,7 +68,7 @@ imagetools/
 ├── env/                # Virtual environment (should not be versioned, e.g., in .gitignore)
 ├── src/                # Main module of the tool
 │   ├── __init__.py     # Package initializer
-│   ├── cli.py          # ! Code for the command-line interface (arguments and execution) - NEXT
+│   ├── cli.py          # Code for the command-line interface (arguments and execution)
 │   ├── rescale.py      # Functions related to resizing images
 │   ├── compress.py     # Functions for resizing/compressing images
 │   ├── addtext.py      # Functions for adding text to images
