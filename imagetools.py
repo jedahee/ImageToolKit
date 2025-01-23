@@ -2,85 +2,85 @@
 --------------------
 IMAGE TOOLS APP v0.1
 --------------------
-Author github name: jedahee
+Author GitHub name: jedahee
 Author name: Jesús Daza
 
-Image Tools es una aplicación de consola la cual ofrece múltiples herramientas
-para poder editar una o mñas imágenes de forma rápida y sencilla.
+Image Tools is a console application offering multiple tools
+for quickly and easily editing one or more images.
 
-¿Que puede hacer Image Tools por ti?
+What can Image Tools do for you?
 
-1) Reducir el peso de la(s) imagen(es)
-2) Redimensionar y cambiar la escala
-3) Conversor de extensión (png, jpg, jpeg...)
-4) Convertir a blanco y negro
-5) Aplicar filtros
-6) Añadir texto a la imagen
-7) Crear miniaturas
-
----
-
-Flujo de Image Tools:
-
--> Entrada al script
-  -> Mensaje de bienvenida
-  -> (Usuario elige opción correcta del catálogo) - (Muestra listado)
-  -> (Usuario especifica la ruta que contiene sus imágenes)
-  -> (Usuario selecciona que imágenes quiere editar)
-
-  Si el usuario eligió:
-  -> Reducir el peso de la(s) imagen(es)
-    -> ¿Por debajo de que tamaño quieres que Image Tools lo reduzca? (ej.: 512KB | siempre en KB)
-    -> ¿Si hay imágenes con demasiado tamaño, puede Image Tools reescarla y hacerla más pequeña?
-    -> ¿Si la imagen es demasiado pesada, quieres forzar la reducción de tamaño al límite especificado en KB sacrificando algo de calidad?
-  -> Redimensionar (valor fijo) o reescalar (valor proporcional)
-    -> Redimensionar
-      -> Mostrar aviso de que si se redimensiona a una escala mayor a la de la imagen original puede perder calidad
-      -> Pediar ancho + alto
-      -> Pedir tipo de calidad (Avisando del tiempo de espera)
-    -> Cambiar escala
-      -> Pedir proporción de la nueva imagen (50%, 75% o 150%...)
-  -> Conversor de extensión (png, jpg, jpeg...) - También puedes cambiar el nombre
-    -> Mostrar comodines disponibles para los nombres (por ej.: index con -INDEX, -INEX_START para indicar el inicio del contenio del index)
-    -> Pedir nuevo (o nuevos) nombres
-    -> Pedir nueva extensión
-  -> Aplicar filtros
-    -> Mostrar catálogo de filtros
-    -> Pedir filtro
-  -> Añadir texto a la imagen
-    -> Pedir texto a añadir
-    -> Pedir fuente (mostrar catálogo)
-    -> Pedir color (mostrar catálogo)
-    -> Pedir posición del texto en la imagen
-  -> Crear miniaturas (favicon)
-    -> Mostrar catálogo de tamaños de miniaturas (ej.: 16px, 32px, 48px, 64px)
-    -> Preguntar si quieres tranformar los archivos a .ICO
-    -> Pedir tamaño de la miniatura
-
- -> Muestra información del estado de la opción ejecutada
--> Salida al script
+1) Reduce the size of the image(s)
+2) Resize and scale
+3) File extension converter (png, jpg, jpeg...)
+4) Convert to black and white
+5) Apply filters
+6) Add text to the image
+7) Create thumbnails
 
 ---
 
-Estructura del proyecto:
+Image Tools Workflow:
+
+-> Entry into the script
+  -> Welcome message
+  -> (User selects the correct option from the menu) - (Displays list)
+  -> (User specifies the path containing the images)
+  -> (User selects the images they want to edit)
+
+  If the user chose:
+  -> Reduce the size of the image(s)
+    -> What is the maximum size you want Image Tools to reduce it to? (e.g., 512KB | always in KB)
+    -> If there are images that are too large, can Image Tools rescale them to make them smaller?
+    -> If the image is too large, would you like to force the size reduction to the specified KB limit, sacrificing some quality?
+  -> Resize (fixed value) or rescale (proportional value)
+    -> Resize
+      -> Show a warning that resizing to a larger size than the original image may result in quality loss
+      -> Ask for width + height
+      -> Ask for quality type (warning about processing time)
+    -> Change scale
+      -> Ask for the proportion of the new image (50%, 75%, or 150%...)
+  -> File extension converter (png, jpg, jpeg...) - You can also change the name
+    -> Show available placeholders for filenames (e.g., index with -INDEX, -INDEX_START to indicate the start of the index content)
+    -> Ask for the new (or new) filenames
+    -> Ask for the new extension
+  -> Apply filters
+    -> Show filter catalog
+    -> Ask for filter
+  -> Add text to the image
+    -> Ask for text to add
+    -> Ask for font (show catalog)
+    -> Ask for color (show catalog)
+    -> Ask for text position in the image
+  -> Create thumbnails (favicon)
+    -> Show thumbnail size catalog (e.g., 16px, 32px, 48px, 64px)
+    -> Ask if you want to transform the files into .ICO format
+    -> Ask for the thumbnail size
+
+-> Display status information for the executed option
+-> Exit the script
+
+---
+
+Project Structure:
 
 imagetools/
-├── env/                # Entorno virtual (no se debe versionar, por ejemplo, en .gitignore)
-├── src/                # Módulo principal de la herramienta
-│   ├── __init__.py     # Inicializador del paquete
-│   ├── cli.py          # ! Código para la interfaz de línea de comandos (argumentos y ejecución) - PRÓXIMO
-│   ├── rescale.py      # Funciones relacionadas con el reescalado de imágenes
-│   ├── compress.py     # Funciones para ajustar el tamaño/comprimir imágenes
-│   ├── addtext.py      # Funciones para añadir texto a las imágenes
-│   ├── extension.py    # Funciones para editar el nombre y extensión de imágenes
-│   ├── color.py        # Funciones para manipular colores (ajustes de color, blanco y negro, etc.)
-│   └── utils.py        # Funciones auxiliares y herramientas generales (por ejemplo, validación de rutas, manejo de errores)
-├── new_images/         # Carpeta para almacenar imágenes procesadas (salida)
-├── requirements.txt    # Dependencias del proyecto (Pillow, click, etc.)
-├── README.md           # Documentación del proyecto
-├── setup.py            # Configuración del paquete si planeas distribuirlo
-├── imagetools.py       # Punto de entrada principal si no se utiliza el CLI
-└── .gitignore          # Archivos a ignorar en el control de versiones (entorno, etc.)
+├── env/                # Virtual environment (should not be versioned, e.g., in .gitignore)
+├── src/                # Main module of the tool
+│   ├── __init__.py     # Package initializer
+│   ├── cli.py          # ! Code for the command-line interface (arguments and execution) - NEXT
+│   ├── rescale.py      # Functions related to resizing images
+│   ├── compress.py     # Functions for resizing/compressing images
+│   ├── addtext.py      # Functions for adding text to images
+│   ├── extension.py    # Functions for editing the name and extension of images
+│   ├── color.py        # Functions for manipulating colors (color adjustments, black & white, etc.)
+│   └── utils.py        # Auxiliary functions and general tools (e.g., path validation, error handling)
+├── new_images/         # Folder to store processed images (output)
+├── requirements.txt    # Project dependencies (Pillow, click, etc.)
+├── README.md           # Project documentation
+├── setup.py            # Package configuration if you plan to distribute it
+├── imagetools.py       # Main entry point if CLI is not used
+└── .gitignore          # Files to ignore in version control (environment, etc.)
 
 
 '''
@@ -90,7 +90,7 @@ from PIL import Image
 from time import sleep
 import os, sys
 
-# Internal import
+# Internal imports for image manipulation, options, and utility functions
 from src.utils import welcome, select_option, ask_for_path, ask_for_images, qselect, display_msg
 from src.compress import compress
 from src.extension import new_format
@@ -100,42 +100,52 @@ from src.rescale import thumbnails, process_images_resize
 from src.addtext import get_available_fonts, add_text_to_image
 from src.cli import cli
 
+# Main function to run the interactive application
 def run_interactive_app():
-  images_selected = []
-  option_menu = ""
-  format_selected = ""
-  selected_path= ""
-  base_name = ""
+  # Variables to store user selections
+  images_selected = []  # List of selected images
+  option_menu = ""  # Menu option selected by user
+  format_selected = ""  # Selected image format (JPEG, PNG, BMP)
+  selected_path = ""  # Path to the images
+  base_name = ""  # Base name for renaming images (if applicable)
 
+  # Suppress warnings for large images that might be decompressed
   warnings.simplefilter('ignore', Image.DecompressionBombWarning)
 
+  # Main loop to keep the app running until the user chooses to exit
   while option_menu != options_main_menu["EXIT"]:
-    welcome()
-    option_menu = select_option()
+    welcome()  # Display a welcome message
+    option_menu = select_option()  # Let the user select an option from the menu
 
+    # If the user didn't choose to exit, proceed with image processing
     if option_menu != options_main_menu["EXIT"]:
-      selected_path = ask_for_path()
+      selected_path = ask_for_path()  # Ask the user to specify the folder containing images
 
-      if (selected_path != ".." and selected_path != ""):
-        images_selected = ask_for_images(selected_path)
+      # If the user provided a valid path, proceed with further selections
+      if selected_path != ".." and selected_path != "":
+        images_selected = ask_for_images(selected_path)  # Ask the user to select images to edit
 
+        # If the user chose the "Reduce size" option
         if option_menu == options_main_menu["REDUCE"]:
-          max_size = qselect("Choose the maximum image size:", allowed_limits_kb)
-          can_resize = qselect("If the image exceeds an appropriate size, do you authorize Image Tools to resize it to a smaller dimension?", ["Yes", "No"])
-          want_force = qselect("If the image is too large, would you like to force the size reduction to the specified KB limit, sacrificing some quality?", ["Yes", "No"])
+          max_size = qselect("Choose the maximum image size:", allowed_limits_kb)  # Ask for the maximum allowed size in KB
+          can_resize = qselect("If the image exceeds an appropriate size, can Image Tools rescale it to make it smaller?", ["Yes", "No"])  # Ask if rescaling is allowed
+          want_force = qselect("If the image is too large, would you like to force the size reduction to the specified KB limit, sacrificing some quality?", ["Yes", "No"])  # Ask if forced size reduction is acceptable
 
+          # Convert user inputs into boolean values
           can_resize = True if can_resize.lower() == "yes" else False
           want_force = True if want_force.lower() == "yes" else False
 
-          print()
+          print()  # Print an empty line for clarity
 
+          # Call the compress function to reduce the size of the selected images
           compress(selected_path, images_selected, can_resize, want_force, max_size)
 
+        # If the user chose the "Resize" option
         elif option_menu == options_main_menu["RESIZE"]:
           resize_mode = qselect(
             "Choose resize mode:",
             ["Fixed size", "Proportional scale"]
-          ).lower()
+          ).lower()  # Ask if they want fixed resizing or proportional scaling
 
           if resize_mode == "fixed size":
             display_msg(
@@ -144,102 +154,119 @@ def run_interactive_app():
             )
 
             try:
+              # Ask for new width and height values
               new_width = int(questionary.text("Enter the new width (px):").ask())
               new_height = int(questionary.text("Enter the new height (px):").ask())
 
+              # Ask for the quality type (faster processing or better quality)
               quality_type = qselect(
                 "Choose image quality (faster processing or better quality):",
                 ["Normal (fast)", "High (slower processing)"]
               ).lower()
 
+              # Map the quality type to a specific resampling method
               quality_mapping = {
                   "normal (fast)": Image.Resampling.BICUBIC,
                   "high (slower processing)": Image.Resampling.LANCZOS,
               }
 
-              quality = quality_mapping[quality_type]
+              quality = quality_mapping[quality_type]  # Set the quality to the selected method
 
+              # Call the function to resize the images based on the specified dimensions and quality
               process_images_resize(
                   selected_path, images_selected, "fixed",
                   (new_width, new_height), quality
               )
             except Exception as e:
-              print()
+              print()  # Print an empty line for clarity
               display_msg(f"Invalid input! Please enter a valid numeric value for the width and height", msg_allowed["ERROR"], False)
-              print()
+              print()  # Print an empty line for clarity
 
           elif resize_mode == "proportional scale":
             try:
+              # Ask for the scaling percentage (e.g., 50%, 75%, 150%)
               scale_percent = int(
                   questionary.text(
                       "Enter the scaling percentage (e.g., 50, 75, 150):"
                   ).ask()
               )
 
+              # Call the function to rescale the images by the specified percentage
               process_images_resize(
                 selected_path, images_selected, "percent",
                 scale_percent, None
               )
             except Exception as e:
-              print()
+              print()  # Print an empty line for clarity
               display_msg(f"Invalid input! Please enter a valid numeric value for the width and height", msg_allowed["ERROR"], False)
-              print()
+              print()  # Print an empty line for clarity
 
+        # If the user chose the "Convert file format" option
         elif option_menu == options_main_menu["FORMATS"]:
+          # Ask the user to select the format they want to convert the images to
           format_selected = qselect("Select the format to convert to:", ["JPEG", "PNG", "BMP"])
+
+          # Ask if the user wants to rename the files during conversion
           change_name = qselect("Do you want to rename the files?", ["Yes", "No"])
           change_name = True if change_name.lower() == "yes" else False
 
           if change_name:
+            # Show the available placeholders for filenames (e.g., adding indexes)
             print("\nYou can use the following placeholders:")
             print(" --INDEX: Adds an index to the end of the new file name, starting from 1. (default)")
             print(" --START <number>: Adds an index to the end of the new file name, starting from the specified <number>.")
 
             while base_name == "":
+              # Ask the user for the new base name for the files
               base_name = questionary.text("Enter the new base name for your files:", style=style).ask()
 
+          # Call the function to convert the images to the selected format
           new_format(selected_path, images_selected, format_selected, change_name, base_name)
-          base_name = ""
-        elif option_menu == options_main_menu["FILTERS"]:
+          base_name = ""  # Reset the base name for future use
 
-          # Pedir al usuario que seleccione un filtro
+        # If the user chose to apply a filter
+        elif option_menu == options_main_menu["FILTERS"]:
+          # Ask the user to select a filter from the available list
           filter_choice = qselect(
             "Choose a filter to apply:",
             available_filters
           )
 
-          # Aplicar el filtro a las imágenes seleccionadas
+          # Call the function to apply the selected filter to the images
           apply_filter_to_images(selected_path, images_selected, filter_choice)
+
+        # If the user chose the "Add text to image" option
         elif option_menu == options_main_menu["TEXT"]:
-          # Solicitar al usuario el texto a añadir
+          # Ask the user for the text they want to add to the images
           text_to_add = questionary.text("Enter the text to add to the image:").ask()
 
-          # Listar fuentes disponibles en la carpeta "fonts"
+          # Get a list of available fonts from the fonts directory
           available_fonts = get_available_fonts()
 
+          # If no fonts are available, set a default font
           if not available_fonts:
             display_msg("No fonts found in the fonts directory!", msg_allowed["ERROR"], False)
-            font_choice = "Anton.ttf"
+            font_choice = "Anton.ttf"  # Default font if no fonts are found
           else:
-            # Pedir al usuario seleccionar una fuente
+            # Ask the user to select a font from the available list
             font_choice = qselect("Choose the font for the text:", available_fonts)
 
           try:
-            # Pedir el tamaño de la fuente
+            # Ask the user for the font size ratio as a percentage of the image width
             font_size_ratio = float(questionary.text(
               "Enter the font size ratio (e.g., 5%, 15%, 30% of image width):"
             ).ask())
           except Exception as e:
-            font_size_ratio = 25
+            font_size_ratio = 25  # Default font size ratio if input is invalid
             display_msg(f"Invalid input! Please enter a valid numeric value for the width and height", msg_allowed["ERROR"], False)
 
-          # Pedir el color del texto
+          # Ask the user for the text color
           color_choice = qselect(
             "Choose the color of the text:",
             ["black", "white", "red", "blue", "green"]
           )
 
-          # Definir las posiciones posibles
+          # Define possible text positions on the image
           position_choices = {
             "Top Left": "Top Left",
             "Top Right": "Top Right",
@@ -248,41 +275,46 @@ def run_interactive_app():
             "Bottom Right": "Bottom Right"
           }
 
-          # Preguntar por la posición del texto
+          # Ask the user for the text position
           position_choice = qselect(
             "Choose the position of the text:",
             list(position_choices.keys())
           )
 
-          # Obtener las coordenadas de la posición elegida
+          # Get the coordinates for the selected position
           position = position_choices[position_choice]
 
+          # Call the function to add the text to the images
           add_text_to_image(selected_path, images_selected, text_to_add, position, font_choice, font_size_ratio, color_choice)
 
+        # If the user chose to create thumbnails
         elif option_menu == options_main_menu["THUMBNAILS"]:
+          # Ask for the desired thumbnail size
           thumbnail_size = qselect("Choose the desired size for your favicon or thumbnail:", ["16px", "24px", "32px", "48px", "64px", "92px", "128px"])
+
+          # Ask if the user wants to convert the images to .ICO format for favicons
           want_favicon = qselect(
             "Would you like to convert the images to .ico format for use as favicons?",
             ["Yes", "No"]
           ).lower()
-          thumbnails(selected_path, images_selected, want_favicon, int(thumbnail_size[:-2]))
 
-        sleep(1.5)
+          # Call the function to create the thumbnails
+          thumbnails(selected_path, images_selected, thumbnail_size, want_favicon)
 
+    sleep(1)  # Give the user a moment to see the results before the app loops again
+^
     else:
       display_msg("All new images are saved in ./new_images", msg_allowed["INFO"])
       display_msg("Bye! :)", msg_allowed["INFO"], False)
 
 
 def main():
-    # ! PROXIMO CLI
 
-    # Verificar si se pasaron argumentos al ejecutar el script
+    # Verify args
     if len(sys.argv) > 1:
-        # Si se pasaron argumentos, ejecutar la CLI
-        cli()  # Llamamos a la función cli() definida en src/cli.py
+      cli()  # Script executing cli args mode
     else:
-        # Si no se pasaron argumentos, ejecutar la app interactiva
+        # Script executing interactuve cli mode
         run_interactive_app()
 
     # run_interactive_app()
