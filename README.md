@@ -16,5 +16,5 @@
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/<your_username>/imagetools.git
+   git clone https://github.com/jedahee/ImageTools.git
    cd imagetools
