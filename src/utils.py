@@ -5,6 +5,7 @@ from sys import exit
 
 from src.variables import valid_extensions, style, options_main_menu, msg_allowed
 
+# Welcome function that displays an introductory ASCII art and text
 def welcome():
   print("""
  █████
@@ -28,6 +29,7 @@ def welcome():
    ░░░░░     ░░░░░░   ░░░░░░  ░░░░░ ░░░░░░
 """)
 
+# Function to select an option from the main menu
 def select_option():
   option = questionary.select(
     "What do you want ImageTools to do for you?",
@@ -37,6 +39,7 @@ def select_option():
 
   return select_option() if option == None else option
 
+# Function to ask the user for a directory path
 def ask_for_path():
   display_msg("Note: Type '..' to back menu list", msg_allowed["INFO"])
   try:
@@ -56,8 +59,8 @@ def ask_for_path():
     display_msg("The path does not exist. Please enter a valid path.", msg_allowed["ERROR"])
     return ask_for_path()
 
+# Function to ask the user to select image files from a specified directory
 def ask_for_images(path):
-
   images_dir = []
   selected_images_dir = []
 
@@ -66,9 +69,9 @@ def ask_for_images(path):
   except:
     display_msg("There seems to be an issue with this path. Please try again later or verify that it exists.", msg_allowed["ERROR"])
 
-  # Recorrer todos los archivos en el directorio
+  # Iterate through all files in the directory
   for file_path in path.iterdir():
-      # Verificar si el archivo tiene una extensión válida de imagen
+      # Check if the file has a valid image extension
       if file_path.suffix.lower() in valid_extensions:
         images_dir.append(file_path.name)
 
@@ -76,6 +79,7 @@ def ask_for_images(path):
     display_msg("Sorry! No images found in this path :C", msg_allowed["ERROR"])
     exit()
 
+  # Prompt the user to select images from the valid ones found in the directory
   selected_images_dir = questionary.checkbox(
     'Select image files',
     choices=images_dir,
@@ -84,7 +88,7 @@ def ask_for_images(path):
 
   return ask_for_images(path) if selected_images_dir == None else selected_images_dir
 
-
+# Function to select a single option from a list of choices
 def qselect(message, options):
   return questionary.select(
     message,
@@ -92,22 +96,23 @@ def qselect(message, options):
     style=style
   ).ask()
 
+# Function to display messages with different styles based on the type of message
 def display_msg(msg, type_msg, spaces=True):
   if spaces:
     print()
 
   color = ""
   if type_msg == 'error':
-      color = "\033[1;37m\033[101m"  # Texto blanco (37m), fondo rojo (41m)
+      color = "\033[1;37m\033[101m"  # White text (37m), red background (41m)
   elif type_msg == 'warning':
-      color = "\033[1;37m\033[103m"  # Texto blanco (37m), fondo amarillo (43m)
+      color = "\033[1;37m\033[103m"  # White text (37m), yellow background (43m)
   elif type_msg == 'info':
-      color = "\033[1;37m\033[104m"  # Texto blanco (37m), fondo azul (44m)
+      color = "\033[1;37m\033[104m"  # White text (37m), blue background (44m)
   elif type_msg == 'success':
-      color = "\033[1;37m\033[102m"  # Texto blanco (37m), fondo verde (42m)
+      color = "\033[1;37m\033[102m"  # White text (37m), green background (42m)
 
-  # Imprimir el mensaje con los colores de texto y fondo
-  print(f"{color} {msg} \033[0m")  # \033[0m es para resetear los estilos
+  # Print the message with the specified color styles
+  print(f"{color} {msg} \033[0m")  # \033[0m resets the color styles
 
   if spaces:
     print()

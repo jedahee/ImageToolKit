@@ -9,7 +9,6 @@ def new_format(input_path, images, new_format, change_name, base_name="none", de
   start_match = re.search(r"--START\s+(\d+)", base_name)
   start_index = int(start_match.group(1)) if start_match else default_start
 
-
   # Clean up the base_name by removing the placeholders
   base_name_cleaned = re.sub(r"--INDEX|--START\s+\d+", "", base_name).strip()
 
@@ -20,7 +19,7 @@ def new_format(input_path, images, new_format, change_name, base_name="none", de
         with Image.open(str(input_path)+"/"+str(image)) as img:
           # Generate the new file name
           index = start_index + i
-          new_file_name = f"{base_name_cleaned}{index}.{new_format.lower()}" if change_name else f"{image.split(".")[0]}.{new_format.lower()}"
+          new_file_name = f"{base_name_cleaned}{index}.{new_format.lower()}" if change_name else f"{image.split('.')[0]}.{new_format.lower()}"
 
           # Save the image in the new format
           img.convert("RGB").save(output_path+"/"+new_file_name, format=new_format.upper())
@@ -28,8 +27,6 @@ def new_format(input_path, images, new_format, change_name, base_name="none", de
       except Exception as e:
           display_msg(f"Error processing image {image}: {e}", msg_allowed["ERROR"], False)
     else:
-      display_msg(f"Image {image} already have format {new_format}", msg_allowed["INFO"], False)
+      display_msg(f"Image {image} already has format {new_format}", msg_allowed["INFO"], False)
 
     i += 1
-
-

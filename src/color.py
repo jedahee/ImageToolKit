@@ -3,7 +3,7 @@ import os
 from src.utils import display_msg
 from src.variables import msg_allowed, output_path
 
-# Función para aplicar un filtro a una imagen
+# Function to apply a filter to images
 def apply_filter_to_images(input_path, images, filter_choice):
     filters = {
         "SEPIA": apply_sepia,
@@ -39,10 +39,10 @@ def apply_filter_to_images(input_path, images, filter_choice):
     for image in images:
         try:
             with Image.open(input_path + image) as img:
-                # Aplicar filtro
+                # Apply the selected filter
                 filtered_img = filters[filter_choice](img)
 
-                # Guardar la imagen procesada
+                # Save the processed image
                 output_image_path = os.path.join(output_path, image)
                 filtered_img.save(output_image_path)
 
@@ -51,7 +51,7 @@ def apply_filter_to_images(input_path, images, filter_choice):
             display_msg(f"Error processing image {image}: {e}", msg_allowed["ERROR"], False)
 
 
-# Funciones específicas para cada filtro
+# Specific functions for each filter
 def apply_sepia(image):
     sepia_filter = ImageOps.colorize(
         image.convert("L"), black="#704214", white="#C0A080"
