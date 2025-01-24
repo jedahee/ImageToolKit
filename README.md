@@ -55,8 +55,9 @@ Image Tools is a console application that offers multiple tools for quickly and 
 ---
 
 ## Project Structure
+```
 imagetools/
-├── env/                # Virtual environment (should not be versioned, eg., in .gitignore)
+├── env/                # Virtual environment (should not be versioned, e.g., in .gitignore)
 ├── src/                # Main module of the tool
 │   ├── __init__.py     # Package initializer
 │   ├── cli.py          # Code for the command-line interface (arguments and execution)
@@ -72,6 +73,8 @@ imagetools/
 ├── setup.py            # Package configuration if you plan to distribute it
 ├── imagetools.py       # Main entry point if CLI is not used
 └── .gitignore          # Files to ignore in version control (environment, etc.)
+```
+
 ---
 
 ## Requirements
