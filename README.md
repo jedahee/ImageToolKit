@@ -122,13 +122,13 @@ Contributions are welcome! If you want to improve this project, follow these ste
    git checkout -b feature/new-feature
    ```
 3. **Make your changes and commit:**
-  ```bash
+    ```bash
     git commit -m 'Add new feature'
-  ```
+    ```
 4. **Push to the branch:**
-  ```bash
+    ```bash
     git push origin feature/new-feature
-  ```
+    ```
 4. **Open a Pull Request.**
 
 ## License
