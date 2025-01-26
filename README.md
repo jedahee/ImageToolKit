@@ -123,11 +123,11 @@ Contributions are welcome! If you want to improve this project, follow these ste
    ```
 3. **Make your changes and commit:**
   ```bash
-  git commit -m 'Add new feature'
+    git commit -m 'Add new feature'
   ```
 4. **Push to the branch:**
   ```bash
-  git push origin feature/new-feature
+    git push origin feature/new-feature
   ```
 4. **Open a Pull Request.**
 
