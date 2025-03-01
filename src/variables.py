@@ -46,11 +46,8 @@ msg_allowed = {
   'SUCCESS': 'success'
 }
 
-# Default output path for processed images
-output_path = "new_images"
-
 # Directory containing fonts for text customization
 fonts_dir = 'fonts/'
 
 # Allowed file size limits (in kilobytes)
-allowed_limits_kb = ["1500 KB", "1024 KB", "512 KB"]
+allowed_limits_kb = ["2048 KB", "1500 KB", "1024 KB", "512 KB", "256 KB"]
