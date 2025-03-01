@@ -54,7 +54,7 @@ Image Tools is a console application that offers multiple tools for quickly and 
 
 ---
 
-## Project Structure
+## Project Structure (Local)
 ```
 imagetools/
 ├── env/                # Virtual environment (should not be versioned, e.g., in .gitignore)
@@ -75,16 +75,33 @@ imagetools/
 └── .gitignore          # Files to ignore in version control (environment, etc.)
 ```
 
----
+## Project Structure (PyPI):
+```
+imagetools/
+├── src/
+│   ├── imagetools/
+│   │   ├── __init__.py
+│   │   ├── cli.py
+│   │   ├── compress.py
+│   │   ├── rescale.py
+│   │   ├── extension.py
+│   │   ├── color.py
+│   │   ├── addtext.py
+│   │   ├── utils.py
+│   │   ├── variables.py
+├── setup.py
+├── requirements.txt
+```
 
 ## Requirements
 
 - Python 3.x
 - Dependencies:
   - `Pillow`
-  - `click`
   - `questionary`
   - `prompt-toolkit`
+  - `prompt`
+  - `setuptools`
   - `Pygments`
   - `regex`
   - `wcwidth`
@@ -98,18 +115,48 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Interactive Mode
+### Interactive Mode (Local)
 Run the script without arguments to start interactive mode:
 
 ```bash
 python imagetools.py
 ```
 
-### CLI Mode
+### Interactive Mode (Deb Package - PyPI)
+Run the script without arguments to start interactive mode:
+
+```bash
+imagetools
+```
+
+### CLI Mode (Local)
 You can use the command-line interface by passing arguments. Example:
 
 ```bash
-python imagetools.py --option reduce --path /path/to/images --max-size 512
+python imagetools.py reduce --input ./img --output ./compressed --max-size 1024KB --resize --quality
+
+python imagetools.py resize --input ./img --output ./resized --mode fixed --dimensions 800 600
+
+python imagetools.py convert --input ./img --output ./converted --format PNG --rename --basename newimage
+
+python imagetools.py filter --input ./img --output ./filtered --filter grayscale
+
+python imagetools.py add-text --input ./img --output ./with-text --text 'Watermark' --color white --position 'Bottom Right' --size 5.0
+```
+
+### CLI Mode (Deb Package - PyPI)
+You can use the command-line interface by passing arguments. Example:
+
+```bash
+imagetools reduce --input ./img --output ./compressed --max-size 1024KB --resize --quality
+
+imagetools resize --input ./img --output ./resized --mode fixed --dimensions 800 600
+
+imagetools convert --input ./img --output ./converted --format PNG --rename --basename newimage
+
+imagetools filter --input ./img --output ./filtered --filter grayscale
+
+imagetools add-text --input ./img --output ./with-text --text 'Watermark' --color white --position 'Bottom Right' --size 5.0
 ```
 
 ## Contributions

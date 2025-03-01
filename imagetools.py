@@ -26,6 +26,7 @@ Image Tools Workflow:
   -> Welcome message
   -> (User selects the correct option from the menu) - (Displays list)
   -> (User specifies the path containing the images)
+  -> (User specifies the output path)
   -> (User selects the images they want to edit)
 
   If the user chose:
@@ -62,7 +63,7 @@ Image Tools Workflow:
 
 ---
 
-Project Structure:
+Project Structure (Local):
 
 imagetools/
 ├── env/                # Virtual environment (should not be versioned, e.g., in .gitignore)
@@ -82,8 +83,25 @@ imagetools/
 ├── imagetools.py       # Main entry point if CLI is not used
 └── .gitignore          # Files to ignore in version control (environment, etc.)
 
+Project Structure (PyPI):
+
+imagetools/
+├── src/
+│   ├── imagetools/
+│   │   ├── __init__.py
+│   │   ├── cli.py
+│   │   ├── compress.py
+│   │   ├── rescale.py
+│   │   ├── extension.py
+│   │   ├── color.py
+│   │   ├── addtext.py
+│   │   ├── utils.py
+│   │   ├── variables.py
+├── setup.py
+├── requirements.txt
 
 '''
+
 import questionary
 import warnings
 from PIL import Image
