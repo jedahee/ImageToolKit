@@ -107,6 +107,7 @@ def run_interactive_app():
   option_menu = ""  # Menu option selected by user
   format_selected = ""  # Selected image format (JPEG, PNG, BMP)
   selected_path = ""  # Path to the images
+  selected_output_path = "" # Output images
   base_name = ""  # Base name for renaming images (if applicable)
 
   # Suppress warnings for large images that might be decompressed
@@ -124,6 +125,7 @@ def run_interactive_app():
       # If the user provided a valid path, proceed with further selections
       if selected_path != ".." and selected_path != "":
         images_selected = ask_for_images(selected_path)  # Ask the user to select images to edit
+        selected_output_path = ask_for_path(True)  # Ask the user to specify the folder containing images
 
         # If the user chose the "Reduce size" option
         if option_menu == options_main_menu["REDUCE"]:
@@ -138,7 +140,7 @@ def run_interactive_app():
           print()  # Print an empty line for clarity
 
           # Call the compress function to reduce the size of the selected images
-          compress(selected_path, images_selected, can_resize, want_force, max_size)
+          compress(selected_path, selected_output_path, images_selected, can_resize, want_force, max_size)
 
         # If the user chose the "Resize" option
         elif option_menu == options_main_menu["RESIZE"]:
@@ -174,7 +176,7 @@ def run_interactive_app():
 
               # Call the function to resize the images based on the specified dimensions and quality
               process_images_resize(
-                  selected_path, images_selected, "fixed",
+                  selected_path, selected_output_path, images_selected, "fixed",
                   (new_width, new_height), quality
               )
             except Exception as e:
@@ -193,7 +195,7 @@ def run_interactive_app():
 
               # Call the function to rescale the images by the specified percentage
               process_images_resize(
-                selected_path, images_selected, "percent",
+                selected_path, selected_output_path, images_selected, "percent",
                 scale_percent, None
               )
             except Exception as e:
@@ -221,7 +223,7 @@ def run_interactive_app():
               base_name = questionary.text("Enter the new base name for your files:", style=style).ask()
 
           # Call the function to convert the images to the selected format
-          new_format(selected_path, images_selected, format_selected, change_name, base_name)
+          new_format(selected_path, selected_output_path, images_selected, format_selected, change_name, base_name)
           base_name = ""  # Reset the base name for future use
 
         # If the user chose to apply a filter
@@ -233,7 +235,7 @@ def run_interactive_app():
           )
 
           # Call the function to apply the selected filter to the images
-          apply_filter_to_images(selected_path, images_selected, filter_choice)
+          apply_filter_to_images(selected_path, selected_output_path, images_selected, filter_choice)
 
         # If the user chose the "Add text to image" option
         elif option_menu == options_main_menu["TEXT"]:
@@ -285,7 +287,7 @@ def run_interactive_app():
           position = position_choices[position_choice]
 
           # Call the function to add the text to the images
-          add_text_to_image(selected_path, images_selected, text_to_add, position, font_choice, font_size_ratio, color_choice)
+          add_text_to_image(selected_path, selected_output_path, images_selected, text_to_add, position, font_choice, font_size_ratio, color_choice)
 
         # If the user chose to create thumbnails
         elif option_menu == options_main_menu["THUMBNAILS"]:
@@ -299,12 +301,14 @@ def run_interactive_app():
           ).lower()
 
           # Call the function to create the thumbnails
-          thumbnails(selected_path, images_selected, thumbnail_size, want_favicon)
+          thumbnails(selected_path, selected_output_path, images_selected, want_favicon, thumbnail_size)
 
-    sleep(1)  # Give the user a moment to see the results before the app loops again
-^
+      sleep(1)  # Give the user a moment to see the results before the app loops again
+
     else:
-      display_msg("All new images are saved in ./new_images", msg_allowed["INFO"])
+
+      if selected_output_path != "":
+        display_msg(f"All new images are saved in {selected_output_path}", msg_allowed["INFO"])
       display_msg("Bye! :)", msg_allowed["INFO"], False)
 
 

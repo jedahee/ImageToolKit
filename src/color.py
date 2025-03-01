@@ -1,10 +1,10 @@
 from PIL import Image, ImageEnhance, ImageOps, ImageFilter
 import os
 from src.utils import display_msg
-from src.variables import msg_allowed, output_path
+from src.variables import msg_allowed
 
 # Function to apply a filter to images
-def apply_filter_to_images(input_path, images, filter_choice):
+def apply_filter_to_images(input_path, selected_output_path, images, filter_choice):
     filters = {
         "SEPIA": apply_sepia,
         "INVERT": invert_colors,
@@ -43,10 +43,10 @@ def apply_filter_to_images(input_path, images, filter_choice):
                 filtered_img = filters[filter_choice](img)
 
                 # Save the processed image
-                output_image_path = os.path.join(output_path, image)
+                output_image_path = os.path.join(selected_output_path, image)
                 filtered_img.save(output_image_path)
 
-                display_msg(f"Filter {filter_choice} applied to {image} and saved to {output_path}", msg_allowed["SUCCESS"], False)
+                display_msg(f"Filter {filter_choice} applied to {image} and saved to {selected_output_path}", msg_allowed["SUCCESS"], False)
         except Exception as e:
             display_msg(f"Error processing image {image}: {e}", msg_allowed["ERROR"], False)
 

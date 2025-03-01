@@ -1,11 +1,11 @@
-from src.variables import output_path, msg_allowed
+from src.variables import msg_allowed
 from src.rescale import rescale_percent
 from src.utils import display_msg
 from PIL import Image
 import os
 from pathlib import Path
 
-def compress(input_path, images, can_resize, want_force, max_size):
+def compress(input_path, selected_output_path, images, can_resize, want_force, max_size):
   input_path = str(input_path)
   input_path += '/' if input_path[-1] != '/' else ''
   max_size = int(max_size[:-2])
@@ -16,7 +16,7 @@ def compress(input_path, images, can_resize, want_force, max_size):
     resize_size_percent = 75
     user_is_info = False
     # Full output path for the file
-    output_path_copy = base_dir / output_path / image
+    output_path_copy = base_dir / selected_output_path / image
 
     # Ensure the output directory exists
     output_path_copy.parent.mkdir(parents=True, exist_ok=True)

@@ -40,10 +40,16 @@ def select_option():
   return select_option() if option == None else option
 
 # Function to ask the user for a directory path
-def ask_for_path():
-  display_msg("Note: Type '..' to back menu list", msg_allowed["INFO"])
+def ask_for_path(output=False):
+
+  if not output:
+    display_msg("Note: Type '..' to back menu list", msg_allowed["INFO"])
+
+  msg=""
+
   try:
-    q_path = questionary.text("Please enter the directory path:", style=style).ask()
+    msg = "Please enter the directory path:" if not output else "Please enter the directory path for the new images:"
+    q_path = questionary.text(msg, style=style).ask()
 
     if q_path == "..":
       return q_path

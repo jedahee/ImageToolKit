@@ -1,5 +1,5 @@
 from src.utils import display_msg
-from src.variables import msg_allowed, output_path
+from src.variables import msg_allowed
 from PIL import Image
 import os
 
@@ -17,7 +17,7 @@ def rescale_percent(image, resize_size_percent):
   return image.resize((new_width, new_height), Image.Resampling.LANCZOS)
 
 # Function to process images for resizing based on mode (fixed or percentage)
-def process_images_resize(input_path, images, resize_mode, resize_value, quality_type):
+def process_images_resize(input_path, selected_output_path, images, resize_mode, resize_value, quality_type):
   input_path = str(input_path)
   input_path += '/' if input_path[-1] != '/' else ''
 
@@ -43,16 +43,16 @@ def process_images_resize(input_path, images, resize_mode, resize_value, quality
           raise ValueError("Invalid resize mode. Use 'fixed' or 'percent'")
 
         # Save the resized image
-        resized_img.save(output_path + "/" + image, optimize=True, format=extension)
+        resized_img.save(selected_output_path + "/" + image, optimize=True, format=extension)
         display_msg(
-          f"Image {image} resized and saved to {output_path}.",
+          f"Image {image} resized and saved to {selected_output_path}.",
           msg_allowed["SUCCESS"], False
         )
     except Exception as e:
       display_msg(f"Error processing image {image}: {e}", msg_allowed["ERROR"], False)
 
 # Function to create thumbnails of images
-def thumbnails(input_path, images, want_favicon, thumbnail_size):
+def thumbnails(input_path, selected_output_path, images, want_favicon, thumbnail_size):
   input_path = str(input_path)
   input_path += '/' if input_path[-1] != '/' else ''
 
@@ -70,9 +70,9 @@ def thumbnails(input_path, images, want_favicon, thumbnail_size):
           img_resized = img.resize((thumbnail_size, thumbnail_size))
 
           # Save the resized image with the correct format
-          img_resized.save(output_path + "/" + output_filename, optimize=True, format=extension)
+          img_resized.save(selected_output_path + "/" + output_filename, optimize=True, format=extension)
           display_msg(
-              f"Image {image} successfully resized to {thumbnail_size}px and saved as {output_filename} in {output_path}",
+              f"Image {image} successfully resized to {thumbnail_size}px and saved as {output_filename} in {selected_output_path}",
               msg_allowed["SUCCESS"],
               False
           )

@@ -1,9 +1,9 @@
 from PIL import Image
-from src.variables import output_path, msg_allowed
+from src.variables import msg_allowed
 from src.utils import display_msg
 import re
 
-def new_format(input_path, images, new_format, change_name, base_name="none", default_start=1):
+def new_format(input_path, selected_output_path, images, new_format, change_name, base_name="none", default_start=1):
   i = 0
   # Extract starting index if provided in the base_name
   start_match = re.search(r"--START\s+(\d+)", base_name)
@@ -22,8 +22,8 @@ def new_format(input_path, images, new_format, change_name, base_name="none", de
           new_file_name = f"{base_name_cleaned}{index}.{new_format.lower()}" if change_name else f"{image.split('.')[0]}.{new_format.lower()}"
 
           # Save the image in the new format
-          img.convert("RGB").save(output_path+"/"+new_file_name, format=new_format.upper())
-          display_msg(f"Image {image}: Converted to {new_format} and saved to {output_path}", msg_allowed["SUCCESS"], False)
+          img.convert("RGB").save(selected_output_path+"/"+new_file_name, format=new_format.upper())
+          display_msg(f"Image {image}: Converted to {new_format} and saved to {selected_output_path}", msg_allowed["SUCCESS"], False)
       except Exception as e:
           display_msg(f"Error processing image {image}: {e}", msg_allowed["ERROR"], False)
     else:

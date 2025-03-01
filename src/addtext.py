@@ -1,5 +1,5 @@
 from src.utils import display_msg
-from src.variables import fonts_dir, msg_allowed, output_path
+from src.variables import fonts_dir, msg_allowed
 import questionary
 import os
 from PIL import Image, ImageDraw, ImageFont
@@ -12,43 +12,54 @@ def get_available_fonts():
             fonts.append(file)
     return fonts
 
-def add_text_to_image(input_path, images, text_to_add, position_choice, font_choice, font_size_ratio, color_choice):
-    input_path = str(input_path)
-    input_path += '/' if input_path[-1] != '/' else ''
+from PIL import Image, ImageDraw, ImageFont
+import os
+from src.utils import display_msg
+from src.variables import fonts_dir, msg_allowed
 
-    # Process the selected images
+def add_text_to_image(input_path, selected_output_path, images, text_to_add, position_choice, font_choice, font_size_ratio, color_choice):
+    input_path = str(input_path)
+    if not input_path.endswith('/'):
+        input_path += '/'
+
     for image in images:
         try:
             with Image.open(input_path + image) as img:
-                # Get image dimensions
                 img_width, img_height = img.size
 
-                # Calculate font size as a percentage of the image width
                 font_size = int((font_size_ratio / 100) * img_width)
-
-                # Load the font
                 font_path = os.path.join(fonts_dir, font_choice)
                 font = ImageFont.truetype(font_path, font_size)
 
-                # Calculate relative position
-                position_mapping = {
-                    "Top Left": (0.1 * img_width, 0.1 * img_height),
-                    "Top Right": (0.9 * img_width, 0.1 * img_height),
-                    "Center": (0.5 * img_width, 0.5 * img_height),
-                    "Bottom Left": (0.1 * img_width, 0.9 * img_height),
-                    "Bottom Right": (0.9 * img_width, 0.9 * img_height)
-                }
-                position = position_mapping[position_choice]
-
-                # Create a drawing object
                 draw = ImageDraw.Draw(img)
 
-                # Add the text
+                # Medir el tamaño real del texto
+                text_bbox = draw.textbbox((0, 0), text_to_add, font=font)
+                text_width = text_bbox[2] - text_bbox[0]
+                text_height = text_bbox[3] - text_bbox[1]
+
+                # Ajustar posición según el texto
+                if position_choice == "Top Left":
+                    position = (10, 10)  # Margen pequeño
+                elif position_choice == "Top Right":
+                    position = (img_width - text_width - 10, 10)
+                elif position_choice == "Center":
+                    position = ((img_width - text_width) // 2, (img_height - text_height) // 2)
+                elif position_choice == "Bottom Left":
+                    position = (10, img_height - text_height - 10)
+                elif position_choice == "Bottom Right":
+                    position = (img_width - text_width - 10, img_height - text_height - 10)
+                else:
+                    position = (10, 10)  # fallback
+
+                # Dibujar el texto en la posición ajustada
                 draw.text(position, text_to_add, font=font, fill=color_choice)
 
-                # Save the image with the added text
-                img.save(output_path + "/" + image)
+                # Guardar la imagen modificada
+                os.makedirs(selected_output_path, exist_ok=True)
+                img.save(os.path.join(selected_output_path, image))
 
-                display_msg(f"Text added to image {image} and saved to {output_path}", msg_allowed["SUCCESS"], False)
+                display_msg(f"Text added to image {image} and saved to {selected_output_path}", msg_allowed["SUCCESS"], False)
+
         except Exception as e:
             display_msg(f"Error adding text to image {image}: {e}", msg_allowed["ERROR"], False)
