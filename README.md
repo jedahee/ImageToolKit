@@ -54,43 +54,25 @@ Image Tools is a console application that offers multiple tools for quickly and 
 
 ---
 
-## Project Structure (Local)
-```
-imagetools/
-├── env/                # Virtual environment (should not be versioned, e.g., in .gitignore)
-├── src/                # Main module of the tool
-│   ├── __init__.py     # Package initializer
-│   ├── cli.py          # Code for the command-line interface (arguments and execution)
-│   ├── rescale.py      # Functions related to resizing images
-│   ├── compress.py     # Functions for resizing/compressing images
-│   ├── addtext.py      # Functions for adding text to images
-│   ├── extension.py    # Functions for editing the name and extension of images
-│   ├── color.py        # Functions for manipulating colors (color adjustments, black & white, etc.)
-│   └── utils.py        # Auxiliary functions and general tools (e.g., path validation, error handling)
-├── new_images/         # Folder to store processed images (output)
-├── requirements.txt    # Project dependencies (Pillow, click, etc.)
-├── README.md           # Project documentation
-├── setup.py            # Package configuration if you plan to distribute it
-├── imagetools.py       # Main entry point if CLI is not used
-└── .gitignore          # Files to ignore in version control (environment, etc.)
-```
-
 ## Project Structure (PyPI):
 ```
 imagetools/
-├── src/
+├── src/                # Main module of the tool
 │   ├── imagetools/
-│   │   ├── __init__.py
-│   │   ├── cli.py
-│   │   ├── compress.py
-│   │   ├── rescale.py
-│   │   ├── extension.py
-│   │   ├── color.py
-│   │   ├── addtext.py
-│   │   ├── utils.py
-│   │   ├── variables.py
-├── setup.py
-├── requirements.txt
+│   ├── __init__.py     # Package initializer
+│   ├── cli.py          # Code for the command-line interface (arguments and execution)
+│   ├── imagetools.py   # Main file
+│   ├── compress.py     # Functions for resizing/compressing images
+│   ├── rescale.py      # Functions related to resizing images
+│   ├── extension.py    # Functions for editing the name and extension of images
+│   ├── color.py        # Functions for manipulating colors (color adjustments, black & white, etc.)
+│   ├── addtext.py      # Functions for adding text to images
+│   ├── utils.py        # Auxiliary functions and general tools (e.g., path validation, error handling)
+│   └── variables.py    # Global variables
+├── requirements.txt    # Project dependencies (Pillow, click, etc.)
+├── README.md           # Project documentation
+├── setup.py            # Package configuration if you plan to distribute it
+└── .gitignore          # Files to ignore in version control (environment, etc.)
 ```
 
 ## Requirements
@@ -119,7 +101,7 @@ pip install -r requirements.txt
 Run the script without arguments to start interactive mode:
 
 ```bash
-python imagetools.py
+python src/imagetools/imagetools.py
 ```
 
 ### Interactive Mode (Deb Package - PyPI)
@@ -133,15 +115,15 @@ imagetools
 You can use the command-line interface by passing arguments. Example:
 
 ```bash
-python imagetools.py reduce --input ./img --output ./compressed --max-size 1024KB --resize --quality
+python src/imagetools/imagetools.py reduce --input ./img --output ./compressed --max-size 1024KB --resize --quality
 
-python imagetools.py resize --input ./img --output ./resized --mode fixed --dimensions 800 600
+python src/imagetools/imagetools.py resize --input ./img --output ./resized --mode fixed --dimensions 800 600
 
-python imagetools.py convert --input ./img --output ./converted --format PNG --rename --basename newimage
+python src/imagetools/imagetools.py convert --input ./img --output ./converted --format PNG --rename --basename newimage
 
-python imagetools.py filter --input ./img --output ./filtered --filter grayscale
+python src/imagetools/imagetools.py filter --input ./img --output ./filtered --filter grayscale
 
-python imagetools.py add-text --input ./img --output ./with-text --text 'Watermark' --color white --position 'Bottom Right' --size 5.0
+python src/imagetools/imagetools.py add-text --input ./img --output ./with-text --text 'Watermark' --color white --position 'Bottom Right' --size 5.0
 ```
 
 ### CLI Mode (Deb Package - PyPI)
