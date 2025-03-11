@@ -1,14 +1,14 @@
 '''
 --------------------
-IMAGE TOOLS APP v0.1
+IMAGETOOLKIT APP v1.0.0
 --------------------
 Author GitHub name: jedahee
 Author name: Jesús Daza
 
-Image Tools is a console application offering multiple tools
+Image Toolkit is a console application offering multiple tools
 for quickly and easily editing one or more images.
 
-What can Image Tools do for you?
+What can Image Toolkit do for you?
 
 1) Reduce the size of the image(s)
 2) Resize and scale
@@ -20,7 +20,7 @@ What can Image Tools do for you?
 
 ---
 
-Image Tools Workflow:
+Image Toolkit Workflow:
 
 -> Entry into the script
   -> Welcome message
@@ -31,8 +31,8 @@ Image Tools Workflow:
 
   If the user chose:
   -> Reduce the size of the image(s)
-    -> What is the maximum size you want Image Tools to reduce it to? (e.g., 512KB | always in KB)
-    -> If there are images that are too large, can Image Tools rescale them to make them smaller?
+    -> What is the maximum size you want Image Toolkit to reduce it to? (e.g., 512KB | always in KB)
+    -> If there are images that are too large, can Image Toolkit rescale them to make them smaller?
     -> If the image is too large, would you like to force the size reduction to the specified KB limit, sacrificing some quality?
   -> Resize (fixed value) or rescale (proportional value)
     -> Resize
@@ -65,12 +65,12 @@ Image Tools Workflow:
 
 Project Structure (PyPI):
 
-imagetools/
+imagetoolkit/
 ├── src/                # Main module of the tool
-│   ├── imagetools/
+│   ├── imagetoolkit/
 │   ├── __init__.py     # Package initializer
 │   ├── cli.py          # Code for the command-line interface (arguments and execution)
-│   ├── imagetools.py   # Main file
+│   ├── imagetoolkit.py   # Main file
 │   ├── compress.py     # Functions for resizing/compressing images
 │   ├── rescale.py      # Functions related to resizing images
 │   ├── extension.py    # Functions for editing the name and extension of images
@@ -131,7 +131,7 @@ def run_interactive_app():
         # If the user chose the "Reduce size" option
         if option_menu == options_main_menu["REDUCE"]:
           max_size = qselect("Choose the maximum image size:", allowed_limits_kb)  # Ask for the maximum allowed size in KB
-          can_resize = qselect("If the image exceeds an appropriate size, can Image Tools rescale it to make it smaller?", ["Yes", "No"])  # Ask if rescaling is allowed
+          can_resize = qselect("If the image exceeds an appropriate size, can Image Toolkit rescale it to make it smaller?", ["Yes", "No"])  # Ask if rescaling is allowed
           want_force = qselect("If the image is too large, would you like to force the size reduction to the specified KB limit, sacrificing some quality?", ["Yes", "No"])  # Ask if forced size reduction is acceptable
 
           # Convert user inputs into boolean values

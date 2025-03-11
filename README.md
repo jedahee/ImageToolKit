@@ -1,4 +1,4 @@
-# Image Tools App v0.1
+# Image Toolkit App v0.1
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
@@ -6,11 +6,11 @@
 **Author GitHub name:** [jedahee](https://github.com/jedahee)
 **Author name:** Jesús Daza
 
-Image Tools is a console application that offers multiple tools for quickly and easily editing one or more images.
+Image Toolkit is a console application that offers multiple tools for quickly and easily editing one or more images.
 
 ---
 
-## What can Image Tools do for you?
+## What can Image Toolkit do for you?
 
 - **Reduce the size of images.**
 - **Resize and scale.**
@@ -22,7 +22,7 @@ Image Tools is a console application that offers multiple tools for quickly and 
 
 ---
 
-## Image Tools Workflow
+## Image Toolkit Workflow
 
 1. **Script entry:**
    - Welcome message.
@@ -56,12 +56,12 @@ Image Tools is a console application that offers multiple tools for quickly and 
 
 ## Project Structure (PyPI):
 ```
-imagetools/
+imagetoolkit/
 ├── src/                # Main module of the tool
-│   ├── imagetools/
+│   ├── imagetoolkit/
 │   ├── __init__.py     # Package initializer
 │   ├── cli.py          # Code for the command-line interface (arguments and execution)
-│   ├── imagetools.py   # Main file
+│   ├── imagetoolkit.py   # Main file
 │   ├── compress.py     # Functions for resizing/compressing images
 │   ├── rescale.py      # Functions related to resizing images
 │   ├── extension.py    # Functions for editing the name and extension of images
@@ -101,44 +101,44 @@ pip install -r requirements.txt
 Run the script without arguments to start interactive mode:
 
 ```bash
-python src/imagetools/imagetools.py
+python src/imagetoolkit/imagetoolkit.py
 ```
 
 ### Interactive Mode (Deb Package - PyPI)
 Run the script without arguments to start interactive mode:
 
 ```bash
-imagetools
+imagetoolkit
 ```
 
 ### CLI Mode (Local)
 You can use the command-line interface by passing arguments. Example:
 
 ```bash
-python src/imagetools/imagetools.py reduce --input ./img --output ./compressed --max-size 1024KB --resize --quality
+python src/imagetoolkit/imagetoolkit.py reduce --input ./img --output ./compressed --max-size 1024KB --resize --quality
 
-python src/imagetools/imagetools.py resize --input ./img --output ./resized --mode fixed --dimensions 800 600
+python src/imagetoolkit/imagetoolkit.py resize --input ./img --output ./resized --mode fixed --dimensions 800 600
 
-python src/imagetools/imagetools.py convert --input ./img --output ./converted --format PNG --rename --basename newimage
+python src/imagetoolkit/imagetoolkit.py convert --input ./img --output ./converted --format PNG --rename --basename newimage
 
-python src/imagetools/imagetools.py filter --input ./img --output ./filtered --filter grayscale
+python src/imagetoolkit/imagetoolkit.py filter --input ./img --output ./filtered --filter grayscale
 
-python src/imagetools/imagetools.py add-text --input ./img --output ./with-text --text 'Watermark' --color white --position 'Bottom Right' --size 5.0
+python src/imagetoolkit/imagetoolkit.py add-text --input ./img --output ./with-text --text 'Watermark' --color white --position 'Bottom Right' --size 5.0
 ```
 
 ### CLI Mode (Deb Package - PyPI)
 You can use the command-line interface by passing arguments. Example:
 
 ```bash
-imagetools reduce --input ./img --output ./compressed --max-size 1024KB --resize --quality
+imagetoolkit reduce --input ./img --output ./compressed --max-size 1024KB --resize --quality
 
-imagetools resize --input ./img --output ./resized --mode fixed --dimensions 800 600
+imagetoolkit resize --input ./img --output ./resized --mode fixed --dimensions 800 600
 
-imagetools convert --input ./img --output ./converted --format PNG --rename --basename newimage
+imagetoolkit convert --input ./img --output ./converted --format PNG --rename --basename newimage
 
-imagetools filter --input ./img --output ./filtered --filter grayscale
+imagetoolkit filter --input ./img --output ./filtered --filter grayscale
 
-imagetools add-text --input ./img --output ./with-text --text 'Watermark' --color white --position 'Bottom Right' --size 5.0
+imagetoolkit add-text --input ./img --output ./with-text --text 'Watermark' --color white --position 'Bottom Right' --size 5.0
 ```
 
 ## Contributions
@@ -163,4 +163,4 @@ Contributions are welcome! If you want to improve this project, follow these ste
 ## License
 This project is licensed under the Creative Commons Zero v1.0 Universal License. See the LICENSE file for details.
 
-Thank you for using Image Tools! 😊
+Thank you for using Image Toolkit! 😊

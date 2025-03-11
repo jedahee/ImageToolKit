@@ -14,8 +14,8 @@ def cli():
     warnings.simplefilter('ignore', Image.DecompressionBombWarning)
 
     parser = argparse.ArgumentParser(
-        description="ImageTools CLI - Advanced command-line image processing tool.",
-        epilog="Example usage: python imagetools.py reduce --input ./images --output ./compressed --max-size 1024KB --quality"
+        description="ImageToolkit CLI - Advanced command-line image processing tool.",
+        epilog="Example usage: python imagetoolkit.py reduce --input ./images --output ./compressed --max-size 1024KB --quality"
     )
 
     subparsers = parser.add_subparsers(dest="command", required=True, help="Available commands")

@@ -31,7 +31,7 @@ def welcome():
 # Function to select an option from the main menu
 def select_option():
   option = questionary.select(
-    "What do you want ImageTools to do for you?",
+    "What do you want ImageToolkit to do for you?",
     choices=list(options_main_menu.values()),
     style=style
   ).ask()
