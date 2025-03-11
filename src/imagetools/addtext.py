@@ -1,6 +1,6 @@
-from src.utils import display_msg
-from src.variables import fonts_dir, msg_allowed
-import questionary
+from .utils import display_msg
+from .variables import fonts_dir, msg_allowed
+from pathlib import Path
 import os
 from PIL import Image, ImageDraw, ImageFont
 
@@ -12,19 +12,14 @@ def get_available_fonts():
             fonts.append(file)
     return fonts
 
-from PIL import Image, ImageDraw, ImageFont
-import os
-from src.utils import display_msg
-from src.variables import fonts_dir, msg_allowed
-
 def add_text_to_image(input_path, selected_output_path, images, text_to_add, position_choice, font_choice, font_size_ratio, color_choice):
-    input_path = str(input_path)
-    if not input_path.endswith('/'):
-        input_path += '/'
+    input_path = Path(input_path)  # Convert to Path object
+    selected_output_path = Path(selected_output_path)  # Convert to Path object
 
     for image in images:
         try:
-            with Image.open(input_path + image) as img:
+            image_path = input_path / image  # Correct way to join paths
+            with Image.open(image_path) as img:
                 img_width, img_height = img.size
 
                 font_size = int((font_size_ratio / 100) * img_width)

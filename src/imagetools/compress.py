@@ -1,13 +1,13 @@
-from src.variables import msg_allowed
-from src.rescale import rescale_percent
-from src.utils import display_msg
+from .variables import msg_allowed
+from .rescale import rescale_percent
+from .utils import display_msg
 from PIL import Image
 import os
 from pathlib import Path
 
 def compress(input_path, selected_output_path, images, can_resize, want_force, max_size):
-  input_path = str(input_path)
-  input_path += '/' if input_path[-1] != '/' else ''
+  input_path = Path(input_path)  # Convert to Path object
+  selected_output_path = Path(selected_output_path)  # Convert to Path object
   max_size = int(max_size[:-2])
 
   base_dir = Path(__file__).resolve().parent.parent  # Go up two directories
@@ -21,7 +21,8 @@ def compress(input_path, selected_output_path, images, can_resize, want_force, m
     # Ensure the output directory exists
     output_path_copy.parent.mkdir(parents=True, exist_ok=True)
 
-    image_open = Image.open(input_path + image)
+    image_path = input_path / image  # Correct way to join paths
+    image_open = Image.open(image_path)
 
     extension = os.path.splitext(image)[1][1:]
     extension = "jpeg" if extension == "jpg" else extension
@@ -37,7 +38,7 @@ def compress(input_path, selected_output_path, images, can_resize, want_force, m
       image_open = rescale_percent(image_open, 90)
       image_open.save(output_path_copy, format=extension, quality=quality, optimize=True)
 
-    image_size = os.path.getsize(input_path + image) / 1024  # Size in KB
+    image_size = os.path.getsize(image_path) / 1024  # Size in KB
 
     if image_size < max_size:
       display_msg("Image " + str(image) + " already had a size below the specified KB limit. (Actual size: " + str(round(image_size, 2)) + " KB)", msg_allowed["INFO"], False)

@@ -2,8 +2,7 @@ import questionary
 import os
 from pathlib import Path
 from sys import exit
-
-from src.variables import valid_extensions, style, options_main_menu, msg_allowed
+from .variables import valid_extensions, style, options_main_menu, msg_allowed
 
 # Welcome function that displays an introductory ASCII art and text
 def welcome():

@@ -63,42 +63,25 @@ Image Tools Workflow:
 
 ---
 
-Project Structure (Local):
-
-imagetools/
-├── env/                # Virtual environment (should not be versioned, e.g., in .gitignore)
-├── src/                # Main module of the tool
-│   ├── __init__.py     # Package initializer
-│   ├── cli.py          # Code for the command-line interface (arguments and execution)
-│   ├── rescale.py      # Functions related to resizing images
-│   ├── compress.py     # Functions for resizing/compressing images
-│   ├── addtext.py      # Functions for adding text to images
-│   ├── extension.py    # Functions for editing the name and extension of images
-│   ├── color.py        # Functions for manipulating colors (color adjustments, black & white, etc.)
-│   └── utils.py        # Auxiliary functions and general tools (e.g., path validation, error handling)
-├── new_images/         # Folder to store processed images (output)
-├── requirements.txt    # Project dependencies (Pillow, click, etc.)
-├── README.md           # Project documentation
-├── setup.py            # Package configuration if you plan to distribute it
-├── imagetools.py       # Main entry point if CLI is not used
-└── .gitignore          # Files to ignore in version control (environment, etc.)
-
 Project Structure (PyPI):
 
 imagetools/
-├── src/
+├── src/                # Main module of the tool
 │   ├── imagetools/
-│   │   ├── __init__.py
-│   │   ├── cli.py
-│   │   ├── compress.py
-│   │   ├── rescale.py
-│   │   ├── extension.py
-│   │   ├── color.py
-│   │   ├── addtext.py
-│   │   ├── utils.py
-│   │   ├── variables.py
-├── setup.py
-├── requirements.txt
+│   ├── __init__.py     # Package initializer
+│   ├── cli.py          # Code for the command-line interface (arguments and execution)
+│   ├── imagetools.py   # Main file
+│   ├── compress.py     # Functions for resizing/compressing images
+│   ├── rescale.py      # Functions related to resizing images
+│   ├── extension.py    # Functions for editing the name and extension of images
+│   ├── color.py        # Functions for manipulating colors (color adjustments, black & white, etc.)
+│   ├── addtext.py      # Functions for adding text to images
+│   ├── utils.py        # Auxiliary functions and general tools (e.g., path validation, error handling)
+│   └── variables.py    # Global variables
+├── requirements.txt    # Project dependencies (Pillow, click, etc.)
+├── README.md           # Project documentation
+├── setup.py            # Package configuration if you plan to distribute it
+└── .gitignore          # Files to ignore in version control (environment, etc.)
 
 '''
 
@@ -109,14 +92,14 @@ from time import sleep
 import os, sys
 
 # Internal imports for image manipulation, options, and utility functions
-from src.utils import welcome, select_option, ask_for_path, ask_for_images, qselect, display_msg
-from src.compress import compress
-from src.extension import new_format
-from src.variables import style, options_main_menu, allowed_limits_kb, msg_allowed, available_filters
-from src.color import apply_filter_to_images
-from src.rescale import thumbnails, process_images_resize
-from src.addtext import get_available_fonts, add_text_to_image
-from src.cli import cli
+from .utils import welcome, select_option, ask_for_path, ask_for_images, qselect, display_msg
+from .compress import compress
+from .extension import new_format
+from .variables import style, options_main_menu, allowed_limits_kb, msg_allowed, available_filters
+from .color import apply_filter_to_images
+from .rescale import thumbnails, process_images_resize
+from .addtext import get_available_fonts, add_text_to_image
+from .cli import cli
 
 # Main function to run the interactive application
 def run_interactive_app():
@@ -336,10 +319,8 @@ def main():
     if len(sys.argv) > 1:
       cli()  # Script executing cli args mode
     else:
-        # Script executing interactuve cli mode
-        run_interactive_app()
-
-    # run_interactive_app()
+      # Script executing interactuve cli mode
+      run_interactive_app()
 
 if __name__ == "__main__":
     main()

@@ -1,7 +1,8 @@
 from PIL import Image, ImageEnhance, ImageOps, ImageFilter
 import os
-from src.utils import display_msg
-from src.variables import msg_allowed
+from pathlib import Path
+from .utils import display_msg
+from .variables import msg_allowed
 
 # Function to apply a filter to images
 def apply_filter_to_images(input_path, selected_output_path, images, filter_choice):
@@ -32,13 +33,13 @@ def apply_filter_to_images(input_path, selected_output_path, images, filter_choi
         "CROP_CENTER": crop_center
     }
 
-    input_path = str(input_path)
-    input_path += '/' if input_path[-1] != '/' else ''
-
+    input_path = Path(input_path)  # Convert to Path object
+    selected_output_path = Path(selected_output_path)  # Convert to Path object
 
     for image in images:
         try:
-            with Image.open(input_path + image) as img:
+            image_path = input_path / image  # Correct way to join paths
+            with Image.open(image_path) as img:
                 # Apply the selected filter
                 filtered_img = filters[filter_choice](img)
 

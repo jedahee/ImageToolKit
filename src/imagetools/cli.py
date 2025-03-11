@@ -2,13 +2,13 @@ import warnings
 import argparse
 import sys, os
 from PIL import Image
-from src.compress import compress
-from src.rescale import process_images_resize
-from src.extension import new_format
-from src.color import apply_filter_to_images
-from src.addtext import add_text_to_image, get_available_fonts
-from src.utils import display_msg
-from src.variables import msg_allowed, available_filters, valid_extensions
+from .compress import compress
+from .rescale import process_images_resize
+from .extension import new_format
+from .color import apply_filter_to_images
+from .addtext import add_text_to_image, get_available_fonts
+from .utils import display_msg
+from .variables import msg_allowed, available_filters, valid_extensions
 
 def cli():
     warnings.simplefilter('ignore', Image.DecompressionBombWarning)
