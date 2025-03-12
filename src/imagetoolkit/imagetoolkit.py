@@ -1,6 +1,6 @@
 '''
 --------------------
-IMAGETOOLKIT APP v1.0.0
+IMAGETOOLKIT APP v0.1
 --------------------
 Author GitHub name: jedahee
 Author name: Jesús Daza
