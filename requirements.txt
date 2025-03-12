@@ -6,7 +6,6 @@ cryptography==44.0.2
 docutils==0.21.2
 id==1.5.0
 idna==3.10
--e git+ssh://git@github.com/jedahee/ImageToolKit.git@fe6148d3104e065fb8b0e90f0aa1d16fab161c9e#egg=imagetoolkit
 jaraco.classes==3.4.0
 jaraco.context==6.0.1
 jaraco.functools==4.1.0
