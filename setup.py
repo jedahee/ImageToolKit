@@ -2,13 +2,13 @@ from setuptools import setup, find_packages
 
 setup(
     name="imagetoolkit",
-    version="0.1.0",
+    version="0.1.1",
     description="Advanced tool for processing images from the command line",
-    long_description=open("README.md", encoding="utf-8").read(),  # Usa el contenido del README
-    long_description_content_type="text/markdown",  # Especifica el formato (Markdown o reStructuredText)
+    long_description=open("README.md", encoding="utf-8").read(),
+    long_description_content_type="text/markdown",
     author="jedahee",
     author_email="jdaza.her@gamil.com",
-    url="https://github.com/jedahee/imagetoolkit",  # Update if you have a repo, or remove if not needed
+    url="https://github.com/jedahee/imagetoolkit",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     install_requires=[
