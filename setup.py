@@ -12,13 +12,13 @@ setup(
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     install_requires=[
-        "Pillow==11.0.0",
+        "Pillow==12.3.0",
         "prompt==0.4.1",
         "prompt-toolkit==3.0.36",
-        "Pygments==2.18.0",
+        "Pygments==2.21.0",
         "questionary==2.0.1",
         "regex==2024.11.6",
-        "setuptools==75.8.0",
+        "setuptools==84.0.0",
         "six==1.16.0",
         "wcwidth==0.2.13"
     ],
