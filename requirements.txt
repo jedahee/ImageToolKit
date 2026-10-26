@@ -1,5 +1,5 @@
 build==1.2.2.post1
-certifi==2025.1.31
+certifi==2026.10.19
 cffi==2.1.1
 charset-normalizer==3.4.1
 cryptography==50.0.1
@@ -16,7 +16,7 @@ mdurl==0.1.2
 more-itertools==10.6.0
 nh3==0.2.21
 packaging==24.2
-pillow==12.3.0
+pillow==13.0.0
 prompt==0.4.1
 prompt-toolkit==3.0.36
 pycparser==2.22
@@ -30,8 +30,8 @@ requests-toolbelt==1.0.0
 rfc3986==2.0.0
 rich==13.9.4
 SecretStorage==3.3.3
-setuptools==84.0.0
+setuptools==84.1.0
 six==1.16.0
 twine==6.1.0
-urllib3==2.7.0
+urllib3==2.8.0
 wcwidth==0.2.13
